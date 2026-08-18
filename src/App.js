@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import dayjs from 'dayjs';
-import Header from './components/Header';
-import Todos from './components/Todos';
 
 function App() {
-  // Existing state data schemas (Preserved intact)
   const todoData = [
     {
       _id: 1,
@@ -29,24 +26,20 @@ function App() {
 
   const [listTasks, setListTasks] = useState(todoData);
   const [showListTasks, setShowListTasks] = useState([]);
-  const [modeSort, setModeSort] = useState('All'); // 'All' | 'Incomplete' | 'Completed'
+  const [modeSort, setModeSort] = useState('All');
 
-  // Input states for the simple native inline modal creator form
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [editingTask, setEditingTask] = useState(null);
 
-  // --- Existing Logic Handlers (Preserved Functional Contracts) ---
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newTitle.trim()) return;
 
     if (editingTask) {
-      // Logic route for updating an edited task
       handleEdit({ ...editingTask, title: newTitle });
       setEditingTask(null);
     } else {
-      // Logic route for adding a new task
       const newTask = {
         _id: Date.now(),
         title: newTitle,
@@ -94,7 +87,6 @@ function App() {
     setModeSort(mode);
   };
 
-  // Sync displayed state variations based on sorting rules
   useEffect(() => {
     if (modeSort === 'All') {
       setShowListTasks(listTasks);
@@ -107,17 +99,15 @@ function App() {
     }
   }, [listTasks, modeSort]);
 
-  // Derived dashboard count metrics
   const totalTasks = listTasks.length;
   const completedTasks = listTasks.filter((t) => t.status).length;
 
   return (
     <div className="min-h-screen bg-slate-100 flex justify-center items-center font-sans antialiased text-slate-800 p-0 sm:p-4">
-      
-      {/* Mobile Frame Container: Constrained on desktops (390px), Full screen on mobile */}
+      {/* Mobile Frame Container */}
       <div className="w-full max-w-[390px] h-screen sm:h-[844px] bg-slate-50 flex flex-col relative overflow-hidden sm:rounded-[40px] sm:shadow-2xl sm:border-[8px] sm:border-slate-900">
         
-        {/* Header Block Design */}
+        {/* Header Block */}
         <header className="px-6 pt-8 pb-4 bg-white border-b border-slate-100 shrink-0">
           <div className="flex justify-between items-center mb-3">
             <h1 className="text-xl font-bold tracking-tight text-indigo-600">StudyMate</h1>
@@ -126,7 +116,6 @@ function App() {
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Good morning, Pavithra 👋</h2>
           <p className="text-xs text-slate-400 font-medium mt-0.5">Let's get things done today.</p>
           
-          {/* Quick Metrics Widgets */}
           <div className="flex gap-3 mt-4">
             <div className="flex-1 bg-slate-50 p-3 rounded-2xl border border-slate-100">
               <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tasks</span>
@@ -139,7 +128,7 @@ function App() {
           </div>
         </header>
 
-        {/* Categories / Filter Segment Tabs Controls */}
+        {/* Filter Segment Tabs */}
         <section className="px-6 py-3 bg-white/80 backdrop-blur-md shrink-0">
           <div className="flex bg-slate-100 p-1 rounded-xl">
             {['All', 'Incomplete', 'Completed'].map((tab) => (
@@ -172,7 +161,6 @@ function App() {
                   task.status ? 'border-slate-100 opacity-60' : 'border-slate-200/60'
                 }`}
               >
-                {/* Checkbox and Text Container */}
                 <div className="flex items-start gap-3.5 flex-1 pr-2">
                   <div className="relative flex items-center mt-0.5">
                     <input 
@@ -193,7 +181,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* Edit & Delete Action Modifiers */}
                 <div className="flex items-center gap-1">
                   <button 
                     onClick={() => {
@@ -252,3 +239,16 @@ function App() {
                 onChange={(e) => setNewTitle(e.target.value)}
                 autoFocus
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
+              />
+              <button 
+                type="submit" 
+                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
+              >
+                {editingTask ? 'Save Variations' : 'Add to Schedule'}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Fixed Bottom Tab Bar */}
+        <nav className="absolute bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-t border-slate-100 flex items-center justify-around px-4 z-30">
