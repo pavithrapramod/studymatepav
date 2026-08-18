@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+=import { useState, useEffect } from 'react';
 import './App.css';
 import dayjs from 'dayjs';
 
@@ -128,7 +128,7 @@ function App() {
           </div>
         </header>
 
-        {/* Filter Segment Tabs */}
+        {/* Filter Tabs */}
         <section className="px-6 py-3 bg-white/80 backdrop-blur-md shrink-0">
           <div className="flex bg-slate-100 p-1 rounded-xl">
             {['All', 'Incomplete', 'Completed'].map((tab) => (
@@ -147,7 +147,7 @@ function App() {
           </div>
         </section>
 
-        {/* Core Task List Cards Scroll Space */}
+        {/* Task Cards Area */}
         <main className="flex-1 overflow-y-auto px-6 py-2 space-y-3 pb-24">
           {showListTasks.length === 0 ? (
             <div className="text-center py-12 text-slate-400 text-xs font-medium">
@@ -204,7 +204,7 @@ function App() {
           )}
         </main>
 
-        {/* Floating Action Button (FAB) */}
+        {/* Floating Action Button */}
         <button 
           onClick={() => {
             setEditingTask(null);
@@ -216,7 +216,7 @@ function App() {
           ＋
         </button>
 
-        {/* Integrated Mobile Interactive Drawer Form Overlay */}
+        {/* Input Form Overlay Drawer */}
         {isFormOpen && (
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs flex items-end z-50 animate-fade-in">
             <form onSubmit={handleSubmit} className="w-full bg-white rounded-t-3xl p-6 shadow-xl space-y-4">
@@ -250,5 +250,6 @@ function App() {
           </div>
         )}
 
-        {/* Fixed Bottom Tab Bar */}
+        {/* Bottom Navigation */}
         <nav className="absolute bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-t border-slate-100 flex items-center justify-around px-4 z-30">
+          <button type="button" className="flex flex-col items-center justify-center text-indigo-600">
